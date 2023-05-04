@@ -1,5 +1,6 @@
 package com.example.gamescore;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -14,6 +15,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState != null) {
+            countScoreForFirst = savedInstanceState.getInt("score1");
+            countScoreForSecond = savedInstanceState.getInt("score2");
+        }
 
         TextView first = findViewById(R.id.scoreFirst);
         TextView second = findViewById(R.id.scoreSecond);
@@ -33,5 +38,17 @@ public class MainActivity extends AppCompatActivity {
                 second.setText(String.valueOf(++countScoreForFirst));
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("score1", countScoreForFirst);
+        outState.putInt("score2", countScoreForSecond);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
